@@ -1,0 +1,24 @@
+{
+    "name": "fillipp/TelegaBot",
+    "description": "Supa Telega Bota!!! Daka Daka Daka!!!",
+    "keywords": ["telegram", "telegram bot"],
+    "type": "project",
+    "license": "1000 teef!",
+    "require": {
+        "php": ">=7.4"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "9.6"
+    },
+    "autoload": {
+        "psr-4": {
+            "Bot\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "daOrkz",
+            "email": "fillippok87@gmail.com"
+        }
+    ]
+}

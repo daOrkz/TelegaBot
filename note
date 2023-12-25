@@ -1,0 +1,18 @@
+
+curl -H "X-Yandex-API-Key: e9dd0b49-9047-40a6-8c32-5157184e1c6d" 'https://api.weather.yandex.ru/v2/forecast?lat=53.4200&lon=87.4900'
+
+curl -H "X-Yandex-API-Key: e9dd0b49-9047-40a6-8c32-5157184e1c6d" 'https://api.weather.yandex.ru/v2/informers?lat=53.4200&lon=87.4900'
+
+informers - "погода на сайте"
+forrecast - "тестовый"
+
+https://api.openweathermap.org/data/2.5/weather?lat=53.45154224&lon=87.38461796&appid=3e693891d250e47d9dc865152b53df36&lang=ru&units=metric
+https://api.openweathermap.org/data/2.5/weather?lat=53.4232&lon=87.4805&appid=3e693891d250e47d9dc865152b53df36
+
+
+https://api.openweathermap.org/data/2.5/weather?q=London&appid=3e693891d250e47d9dc865152b53df36
+
+
+
+
+https://api.openweathermap.org/data/2.5/forecast?lat=53.45154224&lon=87.38461796&appid=3e693891d250e47d9dc865152b53df36&lang=ru&units=metric
