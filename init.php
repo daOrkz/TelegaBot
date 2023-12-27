@@ -1,10 +1,5 @@
 <?php
 
-/* 
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHP.php to edit this template
- */
-
 /**
  * for init WenHook follow the link: http://localhost/init.php
  */
@@ -32,4 +27,6 @@ try {
 } catch (CurlException $e) {
     echo $e->getTraceAsString() . PHP_EOL;
     echo $e->getMessage();
+    echo $e->sendErrorMessage();
+
 }

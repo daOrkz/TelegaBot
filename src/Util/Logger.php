@@ -8,16 +8,16 @@ class Logger
     protected string $directory;
     protected string $fileName;
 
-    public function __construct(string $directory = '/Logs', string $fileName = '/log.txt')
+    public function __construct(string $directory = '/Logs/', string $fileName = '/log.txt')
     {
-        $this->directory = dirname($_SERVER['SCRIPT_FILENAME']) . $directory;
+        $this->directory = realpath($_SERVER['DOCUMENT_ROOT']) . $directory;
         $this->fileName = $fileName;
     }
 
     public function writeLog($text, bool $append = false)
     {
         if (!file_exists($this->directory)) {
-            mkdir($this->directory, 0777, true);
+            mkdir($this->directory, 7777, true);
         }
 
         $date = date("d-m-Y H:i:s") . PHP_EOL;
@@ -46,3 +46,6 @@ class Logger
     }
     
 }
+
+
+//$log = new Logger();

@@ -16,5 +16,10 @@ use Exception;
  */
 class CurlException extends Exception
 {
-    //put your code here
+    public function sendErrorMessage()
+    {
+        $errorMsg = "Error on line {$this->getLine()} : {$this->getMessage()}" . PHP_EOL
+            . $this->getTraceAsString();
+        return $errorMsg;
+    }
 }

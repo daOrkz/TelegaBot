@@ -14,7 +14,7 @@ class Logger
     public function writeLog($text, bool $append = false)
     {
         if (!file_exists($this->directory)) {
-            mkdir($this->directory, 7777, true);
+            mkdir($this->directory, 0777, true);
         }
 
         $date = date("d-m-Y H:i:s");
