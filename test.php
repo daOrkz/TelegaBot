@@ -6,198 +6,82 @@
  */
 
 require_once 'src/init.php';
-
-use Bot\Util\Logger as Logger;
-
-/**
-  $data = 'assdfhgjh';
-
-
-  $ErrLogger = new Logger('/Logs', '/q.txt');
-  //$logger = new Logger();
-
-  $ErrLogger->writeLog($data);
-
-  exit();
- * 
- * 
- * 
- */
-
-
-
-// CurlPostField
-abstract class CurlPostField
+interface iStrategyCommand
 {
-    protected string $chatId;
-    protected string $text;
-    protected string $parse_mode;
+    public function execute($command);
+}
 
-    public function setChatId(string $chatId): void
+class StartCommand implements iStrategyCommand
+{
+    public function execute($command)
     {
-        $this->chatId = $chatId;
-    }
-
-    public function setText(string $text): void
-    {
-        $this->text = $text;
-    }
-
-    public function setParse_mode(string $parse_mode): void
-    {
-        $this->parse_mode = $parse_mode;
-    }
-
-    public function __get($name)
-    {
-        return $this->$name;
+        return 'start';
     }
 
 }
 
-class CurlPostFieldHtml extends CurlPostField // $parse_mode = 'html' 
+class TimeCommand implements iStrategyCommand
 {
-    
-}
-
-class CurlPostFieldMd extends CurlPostField   // $parse_mode = 'md'
-{
-    
-}
-
-class AdminCurlPostField extends CurlPostField   //  $chatId = сразу прописать мой, т.к. это будет мой служебный чат
-{
-
-}
-
-interface iCurlPostFieldBiulder
-{
-    public function setChatId(string $chatId): iCurlPostFieldBiulder;
-    public function setText(string $text): iCurlPostFieldBiulder;
-    public function setParse_mode(string $parse_mode): iCurlPostFieldBiulder;
-    public function build(): \CurlPostField;
-}
-
-class CurlPostFieldHtmlBuilder implements iCurlPostFieldBiulder
-{
-    protected CurlPostFieldHtml $message;
-
-//    public function __construct(ReportMessage $message)
-//    {
-//        $this->message = $message;
-//    }
-    
-    public function init()
+    public function execute($command)
     {
-        $this->message = new CurlPostFieldHtml();
-        return $this;
-    }
-
-    public function setChatId(string $chatId): iCurlPostFieldBiulder
-    {
-        $this->message->setChatId($chatId);
-        return $this;
-    }
-
-    public function setParse_mode(string $parse_mode): iCurlPostFieldBiulder
-    {
-        $this->message->setParse_mode($parse_mode);
-        return $this;
-    }
-
-    public function setText(string $text): iCurlPostFieldBiulder
-    {
-        $this->message->setText($text);
-        return $this;
-    }
-
-    public function build(): \CurlPostField
-    {
-        return $this->message;
+        return 'time';
     }
 
 }
 
-class CurlPostFieldMdBuilder implements iCurlPostFieldBiulder
+class WeatherCommand implements iStrategyCommand
 {
-    protected CurlPostFieldMd $message;
-
-//    public function __construct(SendMessage $message)
-//    {
-//        $this->message = $message;
-//    }
-    
-    public function init()
+    public function execute($command)
     {
-        $this->message = new CurlPostFieldMd();
-        return $this;
-    }
-
-    public function setChatId(string $chatId): iCurlPostFieldBiulder
-    {
-        $this->message->setChatId($chatId);
-        return $this;
-    }
-
-    public function setParse_mode(string $parse_mode): iCurlPostFieldBiulder
-    {
-        $this->message->setParse_mode($parse_mode);
-        return $this;
-    }
-
-    public function setText(string $text): iCurlPostFieldBiulder
-    {
-        $this->message->setText($text);
-        return $this;
-    }
-
-    public function build(): \CurlPostField
-    {
-        return $this->message;
+        return 'weather';
     }
 
 }
 
-$reportMessage = (new CurlPostFieldHtmlBuilder())
-    ->init()
-    ->setChatId('admin chat id')
-    ->setParse_mode('html')
-    ->setText('$reportMessage')
-    ->build();
-
-$sendMessage = (new CurlPostFieldMdBuilder())
-    ->init()
-    ->setChatId('user chat id')
-    ->setParse_mode('md')
-    ->setText('$sendMessage')
-    ->build();
-
-
-
-echo $reportMessage->chatId;
-echo $sendMessage->chatId;
-
-
-class Ser 
+class ContextCommand
 {
-    public $name;
-    public $age;
-    
-    public function __construct($name, $age)
+    private iStrategyCommand $strategy;
+
+    public function setStrategy(iStrategyCommand $strategy)
     {
-        $this->name = $name;
-        $this->age = $age;
+        $this->strategy = $strategy;
     }
 
-    public function __serialize(): array
+    public function executeStrategy($command)
     {
-        return [
-          'name' => $this->name,
-          'age' => $this->age,
-        ];
+        return $this->strategy->execute($command);
     }
+
 }
 
-$ser = new Ser('Tom', 20);
+$commands = ['/time', '/weather', '/start'];
 
-print_r($ser);
+$context = new ContextCommand();
+
+foreach ($commands as $command) {
+
+
+
+    switch ($command) {
+        case '/start':
+            $context->setStrategy(new StartCommand());
+            echo $context->executeStrategy($command);
+
+            break;
+
+        case '/time':
+            $context->setStrategy(new TimeCommand());
+            echo $context->executeStrategy($command);
+
+            break;
+
+        case '/weather':
+            $context->setStrategy(new WeatherCommand());
+            echo $context->executeStrategy($command);
+
+            break;
+
+        default:
+            break;
+    }
+}
