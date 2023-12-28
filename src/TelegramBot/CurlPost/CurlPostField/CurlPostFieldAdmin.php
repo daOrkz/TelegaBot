@@ -7,7 +7,8 @@
 
 namespace Bot\TelegramBot\CurlPost\CurlPostField;
 
-use Bot\TelegramBot\CurlPost\aCurlPostField;
+use Bot\TelegramBot\CurlPost\CurlPostField\aCurlPostField;
+
 
 /**
  * Description of CurlPostFieldHtml
@@ -24,5 +25,20 @@ class CurlPostFieldAdmin extends aCurlPostField
           'text' => $this->text,
           'parse_mode' => $this->parse_mode,
         ];
+    }
+    
+    public function getOpt()
+    {
+        return [
+          'chat_id' => $this->chatId,
+          'text' => $this->text,
+          'parse_mode' => $this->parse_mode,
+        ];
+    }
+    
+        
+    public function setMessage(string $message): void
+    {
+        $this->text = $message;
     }
 }

@@ -8,8 +8,9 @@ class TeleBotException extends Exception
 {
     public function sendErrorMessage()
     {
-        $errorMsg = "Error on line {$this->getLine()} : <b>{$this->getMessage()}</b>" . PHP_EOL
-            . $this->getTraceAsString();
+        $errorMsg = "<b><i>Warning!</i></b>" . PHP_EOL
+            . "Error on line <b>{$this->getLine()}</b> : <pre>{$this->getMessage()}</pre>" . PHP_EOL
+            . "<code>{$this->getTraceAsString()}</code>";
         return $errorMsg;
     }
 }

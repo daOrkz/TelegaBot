@@ -18,7 +18,8 @@ class CurlException extends Exception
 {
     public function sendErrorMessage()
     {
-        $errorMsg = "Error on line {$this->getLine()} : {$this->getMessage()}" . PHP_EOL
+        $errorMsg = 'Curl Exception' . PHP_EOL
+            . "Error on line {$this->getLine()} : {$this->getMessage()}" . PHP_EOL
             . $this->getTraceAsString();
         return $errorMsg;
     }

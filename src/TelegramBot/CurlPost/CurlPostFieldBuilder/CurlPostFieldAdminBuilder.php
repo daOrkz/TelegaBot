@@ -44,7 +44,7 @@ class CurlPostFieldAdminBuilder implements iCurlPostFieldBuilder
         return $this;
     }
 
-    public function build(): \aCu
+    public function build()
     {
         return $this->curlPostField;
     }

@@ -10,7 +10,7 @@ require_once 'src/init.php';
 use Bot\Exceptions\{CommonException, CurlException, TeleBotException};
 
 use Bot\Util\Logger as Logger;
-use Bot\TelegramBot\CurlPost\CurlPostFieldBuilder\CurlPostFieldHtmlBuilder;
+use Bot\TelegramBot\CurlPost\CurlPostFieldBuilder\{CurlPostFieldHtmlBuilder, CurlPostFieldAdminBuilder, CurlPostFieldMdBuilder};
 use Bot\TelegramBot\TelegramBot;
 
 $config = parse_ini_file('config.ini');
@@ -38,30 +38,38 @@ $sendMessageCurlPostField = (new CurlPostFieldHtmlBuilder())
 $curlOpt = $sendMessageCurlPostField->getOpt();
 
 $telegramBot = new TelegramBot($config);
+
+
+$sendMessageCurlPostFieldAdmin = (new CurlPostFieldAdminBuilder())
+    ->init()
+    ->setChatId($config['adminId'])
+    ->setParse_mode('html')
+    ->build();
     
 try {
     
+//    throw new TeleBotException('1234567');
     $telegramBot->sendResponseTelegram('sendMessage', $curlOpt);
     
+    
 } catch (TeleBotException $e) {
-    $e->sendErrorMessage();
+//    echo $e->sendErrorMessage();
     $ErrLogger->writeLog($e->sendErrorMessage());
+      
+    $sendMessageCurlPostFieldAdmin->setMessage($e->sendErrorMessage());
+    $curlOpt = $sendMessageCurlPostFieldAdmin->getOpt(); 
     
-    $sendMessageCurlPostField = (new CurlPostFieldHtmlBuilder())
-        ->init()
-        ->setChatId($config['userId'])
-        ->setParse_mode('html')
-        ->setText($e->sendErrorMessage())
-        ->build();
-    
-    $curlOpt = $sendMessageCurlPostField->getOpt();
-
     $telegramBot->sendResponseTelegram('sendMessage', $curlOpt);
     
 } catch (CurlException $e) {
-    echo $e->getMessage();
-    echo $e->getTraceAsString();
+    echo $e->sendErrorMessage();
     $ErrLogger->writeLog($e->sendErrorMessage());
+    
+    $sendMessageCurlPostFieldAdmin->setMessage($e->sendErrorMessage());
+    $curlOpt = $sendMessageCurlPostFieldAdmin->getOpt();
+    
+    $telegramBot->sendResponseTelegram('sendMessage', $curlOpt);
+
 }
 
 exit();

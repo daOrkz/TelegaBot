@@ -24,4 +24,13 @@ class CurlPostFieldMd extends aCurlPostField
           'parse_mode' => $this->parse_mode,
         ];
     }
+    
+    public function getOpt()
+    {
+        return [
+          'chat_id' => $this->chatId,
+          'text' => $this->text,
+          'parse_mode' => $this->parse_mode,
+        ];
+    }
 }

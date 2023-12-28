@@ -52,7 +52,7 @@ class TelegramBot implements iTelegramBot
 
         $response = curl_exec($ch);
         curl_close($ch);
-
+        
         if (curl_errno($ch)) {
             throw new CURLException(curl_error($ch));
         }
