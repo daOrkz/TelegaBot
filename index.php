@@ -36,10 +36,11 @@ $messageText = $data->message->text;
 $ErrLogger = new Logger('/Logs', '/errLogs.txt');
 $logger = new Logger();
 
-$logger->writeLog($data);
-$logger->writeLog($messageText, true);
+//$logger->writeLog($data);
+//$logger->writeLog($messageText, true);
 //$logger->writeLog($data['message']['from']['id'], true);
 
+/**
 $sendMessageCurlPostField = (new CurlPostFieldHtmlBuilder())
     ->init()
     ->setChatId($config['userId'])
@@ -48,6 +49,7 @@ $sendMessageCurlPostField = (new CurlPostFieldHtmlBuilder())
     ->build();
 
 $curlOpt = $sendMessageCurlPostField->getOpt();
+*/
 
 $telegramBot = new TelegramBot($config);
 
@@ -57,59 +59,32 @@ $sendMessageCurlPostFieldAdmin = (new CurlPostFieldAdminBuilder())
     ->setParse_mode('html')
     ->build();
 
-$messageText = '/start';
-
 $contextCommand = new ContextCommand();
 
 
-       echo ($messageText);
-try {
+
+//$messageText = '/start';
 switch ($messageText) {
     case '/start':
-//        $name = $data->message->from->first_name;
-
         $contextCommand->setStrategy(new StartCommand());
         $curlOpt = $contextCommand->executeStrategy($data);
 
         $telegramBot->sendResponseTelegram('sendMessage', $curlOpt);
-       echo ($messageText);
 
         break;
 
     case '/time':
         $contextCommand->setStrategy(new TimeCommand());
-        $curretnTime = $contextCommand->executeStrategy();
-
-        $timeTextMessage = "Текущее время: <b>{$curretnTime['time']}</b>" . PHP_EOL;
-        
-        $sendMessageCurlPostField = (new CurlPostFieldHtmlBuilder())
-            ->init()
-            ->setChatId($config['userId'])
-            ->setParse_mode('html')
-            ->setText($timeTextMessage)
-            ->build();
-
-        $curlOpt = $sendMessageCurlPostField->getOpt();
+        $curlOpt = $contextCommand->executeStrategy($data);
+       
         $telegramBot->sendResponseTelegram('sendMessage', $curlOpt);
         
         break;
 
     case '/weather':
         $contextCommand->setStrategy(new WeatherCommand());
-        $currentWeather = $contextCommand->executeStrategy('current');
+        $curlOpt = $contextCommand->executeStrategy($data);
 
-        $weathetTextMessage = "Температура в Мысках: <b>{$currentWeather['current']['temp_c']}</b>" . PHP_EOL
-            . "Ощущается как: {$currentWeather['current']['feelslike_c']}" . PHP_EOL
-            . "Скорость ветра: {$currentWeather['current']['wind_kph']}";
-
-        $sendMessageCurlPostField = (new CurlPostFieldHtmlBuilder())
-            ->init()
-            ->setChatId($config['userId'])
-            ->setParse_mode('html')
-            ->setText($weathetTextMessage)
-            ->build();
-
-        $curlOpt = $sendMessageCurlPostField->getOpt();
         $telegramBot->sendResponseTelegram('sendMessage', $curlOpt);
 
         break;
@@ -121,7 +96,7 @@ switch ($messageText) {
 
 
 
-
+try{
 //    throw new TeleBotException('1234567');
 //    $telegramBot->sendResponseTelegram('sendMessage', $curlOpt);
 } catch (TeleBotException $e) {

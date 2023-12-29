@@ -9,7 +9,6 @@ namespace Bot\TelegramBot\CommandStrategy\Commands;
 
 use Bot\TelegramBot\CommandStrategy\iStrategyCommand;
 use Bot\TelegramBot\CurlPost\CurlPostFieldBuilder\CurlPostFieldHtmlBuilder;
-//$config = parse_ini_file('config.ini');
 
 
 /**
@@ -21,12 +20,13 @@ class StartCommand implements iStrategyCommand
 {
     public function execute($data): array
     {
+        $fromChatId = $data->message->from->id;
+
         $helloTextMessage = "Hello: <b>{$data->message->from->first_name}</b>" . PHP_EOL;
         
         $sendMessageCurlPostField = (new CurlPostFieldHtmlBuilder())
             ->init()
-//            ->setChatId($config['userId'])
-            ->setChatId('465573672')
+            ->setChatId($fromChatId)
             ->setParse_mode('html')
             ->setText($helloTextMessage)
             ->build();

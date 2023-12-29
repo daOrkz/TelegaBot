@@ -8,6 +8,8 @@
 namespace Bot\TelegramBot\CommandStrategy\Commands;
 
 use Bot\TelegramBot\CommandStrategy\iStrategyCommand;
+use Bot\TelegramBot\CurlPost\CurlPostFieldBuilder\CurlPostFieldHtmlBuilder;
+
 use Bot\Services\Time;
 
 /**
@@ -17,8 +19,21 @@ use Bot\Services\Time;
  */
 class TimeCommand implements iStrategyCommand
 {
-    public function execute(string $command = null): array
+    public function execute($data): array
     {
-        return Time::getTime();
+        $fromChatId = $data->message->from->id;
+
+        $curretnTime = Time::getTime();
+        
+        $timeTextMessage = "Текущее время: <b>{$curretnTime['time']}</b>" . PHP_EOL;
+        
+        $sendMessageCurlPostField = (new CurlPostFieldHtmlBuilder())
+            ->init()
+            ->setChatId($fromChatId)
+            ->setParse_mode('html')
+            ->setText($timeTextMessage)
+            ->build();
+
+        return $sendMessageCurlPostField->getOpt();
     }
 }

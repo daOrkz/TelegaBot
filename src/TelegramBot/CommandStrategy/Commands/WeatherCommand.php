@@ -8,6 +8,8 @@
 namespace Bot\TelegramBot\CommandStrategy\Commands;
 
 use Bot\TelegramBot\CommandStrategy\iStrategyCommand;
+use Bot\TelegramBot\CurlPost\CurlPostFieldBuilder\CurlPostFieldHtmlBuilder;
+
 use Bot\Services\Weather;
 
 /**
@@ -17,8 +19,23 @@ use Bot\Services\Weather;
  */
 class WeatherCommand implements iStrategyCommand
 {
-    public function execute($command): array
+    public function execute($data): array
     {
-        return Weather::getWeather('current');
+        $fromChatId = $data->message->from->id;
+
+        $currentWeather = Weather::getWeather('current');
+        
+        $weathetTextMessage = "Температура в Мысках: <b>{$currentWeather['current']['temp_c']}</b>" . PHP_EOL
+            . "Ощущается как: {$currentWeather['current']['feelslike_c']}" . PHP_EOL
+            . "Скорость ветра: {$currentWeather['current']['wind_kph']}";
+
+        $sendMessageCurlPostField = (new CurlPostFieldHtmlBuilder())
+            ->init()
+            ->setChatId($fromChatId)
+            ->setParse_mode('html')
+            ->setText($weathetTextMessage)
+            ->build();
+
+        return $sendMessageCurlPostField->getOpt();
     }
 }

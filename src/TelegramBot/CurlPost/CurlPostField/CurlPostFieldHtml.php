@@ -15,17 +15,8 @@ use Bot\TelegramBot\CurlPost\CurlPostField\aCurlPostField;
  * @author fillipp
  */
 class CurlPostFieldHtml extends aCurlPostField
-{
-    public function __serialize(): array
-    {
-        return [
-          'chatId' => $this->chatId,
-          'text' => $this->text,
-          'parse_mode' => $this->parse_mode,
-        ];
-    }
-    
-    public function getOpt()
+{  
+    public function getOpt(): array
     {
         return [
           'chat_id' => $this->chatId,
