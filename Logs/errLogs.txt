@@ -1,5 +1,4 @@
-28-12-2023 15:04:50
+29-12-2023 17:40:09
  <b><i>Warning!</i></b>
-Error on line <b>70</b> : <pre>{"method":"sendMessage","postField":{"chat_id":"465573672","text":"yeeeeees","parse_mode":"html"},"response":{"ok":true,"result":{"message_id":413,"from":{"id":6610572083,"is_bot":true,"first_name":"tomato_man","username":"tomato_man_bot"},"chat":{"id":465573672,"first_name":"Fillippok","username":"fillippok87","type":"private"},"date":1703772290,"text":"yeeeeees"}}}</pre>
-<code>#0 /home/fillipp/www/localhost/index.php(52): Bot\TelegramBot\TelegramBot->sendResponseTelegram('sendMessage', Array)
-#1 {main}</code>
+Error on line <b>59</b> : <pre>1234567</pre>
+<code>#0 {main}</code>
