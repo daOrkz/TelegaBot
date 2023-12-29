@@ -8,6 +8,7 @@
 namespace Bot\TelegramBot\CommandStrategy\Commands;
 
 use Bot\TelegramBot\CommandStrategy\iStrategyCommand;
+use Bot\Services\Time;
 
 /**
  * Description of StartCommand
@@ -16,8 +17,8 @@ use Bot\TelegramBot\CommandStrategy\iStrategyCommand;
  */
 class TimeCommand implements iStrategyCommand
 {
-    public function execute($command)
+    public function execute(string $command = null): array
     {
-        return 'time';
+        return Time::getTime();
     }
 }

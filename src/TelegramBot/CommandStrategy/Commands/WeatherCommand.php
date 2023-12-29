@@ -8,6 +8,7 @@
 namespace Bot\TelegramBot\CommandStrategy\Commands;
 
 use Bot\TelegramBot\CommandStrategy\iStrategyCommand;
+use Bot\Services\Weather;
 
 /**
  * Description of StartCommand
@@ -16,8 +17,8 @@ use Bot\TelegramBot\CommandStrategy\iStrategyCommand;
  */
 class WeatherCommand implements iStrategyCommand
 {
-    public function execute($command)
+    public function execute($command): array
     {
-        return 'weather';
+        return Weather::getWeather('current');
     }
 }

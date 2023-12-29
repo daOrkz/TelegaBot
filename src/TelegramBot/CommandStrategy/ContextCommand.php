@@ -23,7 +23,7 @@ class ContextCommand
         $this->strategy = $strategy;
     }
 
-    public function executeStrategy($command): string
+    public function executeStrategy(string $command = null): array
     {
         return $this->strategy->execute($command);
     }
