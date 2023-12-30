@@ -22,6 +22,7 @@ class CurlPostFieldHtml extends aCurlPostField
           'chat_id' => $this->chatId,
           'text' => $this->text,
           'parse_mode' => $this->parse_mode,
+          'reply_markup' => $this->replyMarkup,
         ];
     }
 }

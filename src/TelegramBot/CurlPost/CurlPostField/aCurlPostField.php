@@ -7,17 +7,19 @@
 
 namespace Bot\TelegramBot\CurlPost\CurlPostField;
 
+use Bot\Exceptions\CommonException;
+
 /**
  * Description of aCurlPostField
  *
  * @author fillipp
  */
-
 class aCurlPostField
 {
     protected string $chatId;
     protected string $text;
     protected string $parse_mode;
+    protected $replyMarkup;
 
     public function setChatId(string $chatId): void
     {
@@ -34,8 +36,20 @@ class aCurlPostField
         $this->parse_mode = $parse_mode;
     }
 
+    public function setReplyMarkup(string $typeKeyBoard, array $keyBoard)
+    {           
+        if($typeKeyBoard != 'inline_keyboard' && $typeKeyBoard != 'keyboard') {
+            throw new CommonException($typeKeyBoard);
+        }
+        
+        $this->replyMarkup = json_encode([
+            $typeKeyBoard => [$keyBoard]
+        ]);
+    }
+
     public function __get($name)
     {
         return $this->$name;
     }
+
 }

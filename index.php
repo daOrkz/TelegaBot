@@ -50,7 +50,7 @@ $sendMessageCurlPostFieldAdmin = (new CurlPostFieldAdminBuilder())
 
 $contextCommand = new ContextCommand();
 
-//$messageText = '/start';
+//$messageText = '/weather';
 try {
     switch ($messageText) {
         case '/start':
@@ -92,6 +92,15 @@ try {
     $ErrLogger->writeLog($e->sendErrorMessage());
 
     $sendMessageCurlPostFieldAdmin->setMessage($e->sendErrorMessage());
+    $curlOpt = $sendMessageCurlPostFieldAdmin->getOpt();
+
+    $telegramBot->sendResponseTelegram('sendMessage', $curlOpt);
+} catch (CommonException $e) {
+    $message = $e->getTraceAsString() . PHP_EOL;
+    $message .= $e->getMessage();
+    $logger->writeLog($message);
+
+    $sendMessageCurlPostFieldAdmin->setMessage($message);
     $curlOpt = $sendMessageCurlPostFieldAdmin->getOpt();
 
     $telegramBot->sendResponseTelegram('sendMessage', $curlOpt);

@@ -28,12 +28,21 @@ class WeatherCommand implements iStrategyCommand
         $weathetTextMessage = "Температура в Мысках: <b>{$currentWeather['current']['temp_c']}</b>" . PHP_EOL
             . "Ощущается как: {$currentWeather['current']['feelslike_c']}" . PHP_EOL
             . "Скорость ветра: {$currentWeather['current']['wind_kph']}";
+            
+        $inlineKeyboard = 
+        [ 
+            [
+                'text' => 'Прогноз на 3 дня',
+                'callback_data' => 'forecast',
+            ]
+        ];
 
         $sendMessageCurlPostField = (new CurlPostFieldHtmlBuilder())
             ->init()
             ->setChatId($fromChatId)
             ->setParse_mode('html')
             ->setText($weathetTextMessage)
+            ->setReplyMarkup('inline_keyboard', $inlineKeyboard)
             ->build();
 
         return $sendMessageCurlPostField->getOpt();

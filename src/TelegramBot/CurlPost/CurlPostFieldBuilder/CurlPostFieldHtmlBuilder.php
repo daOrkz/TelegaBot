@@ -43,6 +43,12 @@ class CurlPostFieldHtmlBuilder implements iCurlPostFieldBuilder
         $this->curlPostField->setText($text);
         return $this;
     }
+    
+    public function setReplyMarkup(string $typeKeyBoard, array $keyBoard): iCurlPostFieldBuilder
+    {
+        $this->curlPostField->setReplyMarkup($typeKeyBoard, $keyBoard);
+        return $this;
+    }
 
     public function build()
     {
