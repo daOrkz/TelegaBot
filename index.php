@@ -11,7 +11,7 @@ use Bot\Exceptions\{
     CurlException,
     TeleBotException
 };
-use Bot\Util\Logger as Logger;
+use Bot\Util\{Logger, InputUser};
 use Bot\TelegramBot\CurlPost\CurlPostFieldBuilder\{
     CurlPostFieldHtmlBuilder,
     CurlPostFieldAdminBuilder,
@@ -29,12 +29,12 @@ $config = parse_ini_file('config.ini');
 
 $data = json_decode(file_get_contents('php://input'));
 
-$messageText = $data->message->text;
+$messageText = InputUser::getInput($data);
 
 $ErrLogger = new Logger('/Logs', '/errLogs.txt');
 $logger = new Logger();
 
-//$logger->writeLog($data);
+$logger->writeLog($data);
 //$logger->writeLog($messageText, true);
 //$logger->writeLog($data->message->from->id, true);
 

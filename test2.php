@@ -7,11 +7,11 @@
 
 function setReplyMarkup(string $typeKeyBoard, array $keyBoard)
 {           
-    if($typeKeyBoard != 'inline_keyboard' && 'keyboard') {
+    if($typeKeyBoard != 'inline_keyboard' && $typeKeyBoard != 'keyboard') {
         echo 'false';
     }
 
     echo 'true';
 }
 
-setReplyMarkup('keyboard', []);
+setReplyMarkup('inline_keyboard', []);
