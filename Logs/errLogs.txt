@@ -1,0 +1,5 @@
+31-12-2023 11:56:15
+ <b><i>Warning!</i></b>
+Error on line <b>70</b> : <pre>{"method":"sendMessage","response":{"ok":false,"error_code":400,"description":"Bad Request: can't parse entities: Unsupported start tag \"br\" at byte offset 25"}}</pre>
+<code>#0 /home/fillipp/www/localhost/index.php(86): Bot\TelegramBot\TelegramBot->sendResponseTelegram('sendMessage', '{"chat_id":"465...')
+#1 {main}</code>

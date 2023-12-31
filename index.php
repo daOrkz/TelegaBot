@@ -20,7 +20,8 @@ use Bot\TelegramBot\CurlPost\CurlPostFieldBuilder\{
 use Bot\TelegramBot\CommandStrategy\ContextCommand;
 use Bot\TelegramBot\CommandStrategy\Commands\{
     StartCommand,
-    WeatherCommand,
+    WeatherCurrentCommand,
+    WeatherForecastCommand,
     TimeCommand
 };
 use Bot\TelegramBot\TelegramBot;
@@ -34,9 +35,9 @@ $messageText = InputUser::getInput($data);
 $ErrLogger = new Logger('/Logs', '/errLogs.txt');
 $logger = new Logger();
 
-$logger->writeLog($data);
+$logger->writeLog($messageText);
 //$logger->writeLog($messageText, true);
-//$logger->writeLog($data->message->from->id, true);
+//$logger->writeLog($data->callback_query->from->id);
 
 
 
@@ -50,7 +51,7 @@ $sendMessageCurlPostFieldAdmin = (new CurlPostFieldAdminBuilder())
 
 $contextCommand = new ContextCommand();
 
-//$messageText = '/weather';
+//$messageText = 'forecast';
 try {
     switch ($messageText) {
         case '/start':
@@ -70,15 +71,23 @@ try {
             break;
 
         case '/weather':
-            $contextCommand->setStrategy(new WeatherCommand());
+            $contextCommand->setStrategy(new WeatherCurrentCommand());
             $curlOpt = $contextCommand->executeStrategy($data);
 
             $telegramBot->sendResponseTelegram('sendMessage', $curlOpt);
 
             break;
+        
+        case 'forecast':
+            $contextCommand->setStrategy(new WeatherForecastCommand());
+            $curlOpt = $contextCommand->executeStrategy($data);
+        
+            $telegramBot->sendResponseTelegram('sendMessage', $curlOpt);
+
+            break;
 
         default:
-            $sendMessageCurlPostFieldAdmin = (new CurlPostFieldHtmlBuilder())
+            $sendMessageCurlPostField = (new CurlPostFieldHtmlBuilder())
                 ->init()
                 ->setChatId($data->message->from->id)
                 ->setParse_mode('html')
@@ -87,7 +96,7 @@ try {
                     . "Выберите команду из списка в меню.")
                 ->build();
             
-            $curlOpt = $sendMessageCurlPostFieldAdmin->getOpt();
+            $curlOpt = $sendMessageCurlPostField->getOpt();
             
             $telegramBot->sendResponseTelegram('sendMessage', $curlOpt);
             break;
@@ -96,8 +105,8 @@ try {
     $ErrLogger->writeLog($e->sendErrorMessage());
 
     $sendMessageCurlPostFieldAdmin->setMessage($e->sendErrorMessage());
-    $curlOpt = $sendMessageCurlPostFieldAdmin->getOpt();
 
+    $curlOpt = $sendMessageCurlPostFieldAdmin->getOpt();
     $telegramBot->sendResponseTelegram('sendMessage', $curlOpt);
 } catch (CurlException $e) {
     $ErrLogger->writeLog($e->sendErrorMessage());

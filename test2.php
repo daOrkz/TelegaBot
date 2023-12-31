@@ -5,13 +5,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHP.php to edit this template
  */
 
-function setReplyMarkup(string $typeKeyBoard, array $keyBoard)
-{           
-    if($typeKeyBoard != 'inline_keyboard' && $typeKeyBoard != 'keyboard') {
-        echo 'false';
-    }
+$arr = ['one' => 1, 'two' => false, 'three' => true, 'fore' => ''];
 
-    echo 'true';
+if(empty($arr['one'])){
+    echo 123456;
 }
-
-setReplyMarkup('inline_keyboard', []);

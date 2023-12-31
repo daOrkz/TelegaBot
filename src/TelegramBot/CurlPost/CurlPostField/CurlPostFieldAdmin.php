@@ -18,15 +18,6 @@ use Bot\TelegramBot\CurlPost\CurlPostField\aCurlPostField;
 
 class CurlPostFieldAdmin extends aCurlPostField
 {
-    public function __serialize(): array
-    {
-        return [
-          'chatId' => $this->chatId,
-          'text' => $this->text,
-          'parse_mode' => $this->parse_mode,
-        ];
-    }
-    
     public function getOpt(): array
     {
         return [

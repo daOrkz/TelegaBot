@@ -19,7 +19,7 @@ abstract class aCurlPostField
     protected string $chatId;
     protected string $text;
     protected string $parse_mode;
-    protected $replyMarkup;
+    protected $replyMarkup = null;
     
     abstract public function getOpt(): array;
 

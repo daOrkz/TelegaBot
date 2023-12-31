@@ -17,32 +17,19 @@ use Bot\Services\Weather;
  *
  * @author fillipp
  */
-class WeatherCommand implements iStrategyCommand
+class WeatherForecastCommand implements iStrategyCommand
 {
     public function execute($data): array
     {
-        $fromChatId = $data->message->from->id;
+        $fromChatId = $data->callback_query->from->id;
 
-        $currentWeather = Weather::getWeather('current');
+        $weathetTextMessage = Weather::getForecastWeather();
         
-        $weathetTextMessage = "Температура в Мысках: <b>{$currentWeather['current']['temp_c']}</b>" . PHP_EOL
-            . "Ощущается как: {$currentWeather['current']['feelslike_c']}" . PHP_EOL
-            . "Скорость ветра: {$currentWeather['current']['wind_kph']}";
-            
-        $inlineKeyboard = 
-        [ 
-            [
-                'text' => 'Прогноз на 3 дня',
-                'callback_data' => 'forecast',
-            ]
-        ];
-
         $sendMessageCurlPostField = (new CurlPostFieldHtmlBuilder())
             ->init()
             ->setChatId($fromChatId)
             ->setParse_mode('html')
             ->setText($weathetTextMessage)
-            ->setReplyMarkup('inline_keyboard', $inlineKeyboard)
             ->build();
 
         return $sendMessageCurlPostField->getOpt();

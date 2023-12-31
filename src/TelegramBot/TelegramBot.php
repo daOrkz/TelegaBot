@@ -50,31 +50,32 @@ class TelegramBot implements iTelegramBot
         $ch = curl_init();
         curl_setopt_array($ch, $options);
 
-        $response = curl_exec($ch);
+        $response = json_decode(curl_exec($ch), true);
         curl_close($ch);
         
         if (curl_errno($ch)) {
             throw new CURLException(curl_error($ch));
         }
 
-        if (isset($response["ok"]) && $response["ok"] == false) {
+        if (empty($response['ok'])) {
 
-            $arrResult = json_decode($response, true);
             $arrDataLog = [
               "method" => $method,
-              "postField" => $postField,
-              "response" => $arrResult
+//              "postField" => $postField,
+              "response" => $response
             ];
 
-            $arrDataLogJSON = json_encode($arrDataLog);
+            $arrDataLogJSON = json_encode($arrDataLog, JSON_UNESCAPED_UNICODE);
             throw new TeleBotException($arrDataLogJSON);
         }
 
-        if ($resultJSON == true) {
-            return $response;
-        }
-        else {
-            return json_decode($response, true);
-        }
+//        if ($resultJSON == true) {
+//            return $response;
+//        }
+//        else {
+//            return json_decode($response, true);
+//        }
+        
+        return $response;
     }
 }
