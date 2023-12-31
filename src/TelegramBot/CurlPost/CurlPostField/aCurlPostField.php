@@ -14,12 +14,14 @@ use Bot\Exceptions\CommonException;
  *
  * @author fillipp
  */
-class aCurlPostField
+abstract class aCurlPostField
 {
     protected string $chatId;
     protected string $text;
     protected string $parse_mode;
     protected $replyMarkup;
+    
+    abstract public function getOpt(): array;
 
     public function setChatId(string $chatId): void
     {
@@ -39,7 +41,7 @@ class aCurlPostField
     public function setReplyMarkup(string $typeKeyBoard, array $keyBoard)
     {           
         if($typeKeyBoard != 'inline_keyboard' && $typeKeyBoard != 'keyboard') {
-            throw new CommonException($typeKeyBoard);
+            throw new CommonException('Bad type keyboard');
         }
         
         $this->replyMarkup = json_encode([

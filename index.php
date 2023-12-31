@@ -36,7 +36,7 @@ $logger = new Logger();
 
 //$logger->writeLog($data);
 //$logger->writeLog($messageText, true);
-//$logger->writeLog($data['message']['from']['id'], true);
+//$logger->writeLog($data->message->from->id, true);
 
 
 
@@ -78,6 +78,18 @@ try {
             break;
 
         default:
+            $sendMessageCurlPostFieldAdmin = (new CurlPostFieldHtmlBuilder())
+                ->init()
+                ->setChatId($data->message->from->id)
+                ->setParse_mode('html')
+                ->setText(
+                      "Неизвестная команда." . PHP_EOL
+                    . "Выберите команду из списка в меню.")
+                ->build();
+            
+            $curlOpt = $sendMessageCurlPostFieldAdmin->getOpt();
+            
+            $telegramBot->sendResponseTelegram('sendMessage', $curlOpt);
             break;
     }
 } catch (TeleBotException $e) {
@@ -88,7 +100,6 @@ try {
 
     $telegramBot->sendResponseTelegram('sendMessage', $curlOpt);
 } catch (CurlException $e) {
-    echo $e->sendErrorMessage();
     $ErrLogger->writeLog($e->sendErrorMessage());
 
     $sendMessageCurlPostFieldAdmin->setMessage($e->sendErrorMessage());
@@ -96,9 +107,8 @@ try {
 
     $telegramBot->sendResponseTelegram('sendMessage', $curlOpt);
 } catch (CommonException $e) {
-    $message = $e->getTraceAsString() . PHP_EOL;
-    $message .= $e->getMessage();
-    $logger->writeLog($message);
+    $message = $e->getTraceAsString() . PHP_EOL . $e->getMessage();
+    $ErrLogger->writeLog($message);
 
     $sendMessageCurlPostFieldAdmin->setMessage($message);
     $curlOpt = $sendMessageCurlPostFieldAdmin->getOpt();

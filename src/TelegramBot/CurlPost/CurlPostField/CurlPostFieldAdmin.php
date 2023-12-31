@@ -27,7 +27,7 @@ class CurlPostFieldAdmin extends aCurlPostField
         ];
     }
     
-    public function getOpt()
+    public function getOpt(): array
     {
         return [
           'chat_id' => $this->chatId,

@@ -1,0 +1,76 @@
+30-12-2023 18:00:29
+ stdClass Object
+(
+    [update_id] => 422956173
+    [callback_query] => stdClass Object
+        (
+            [id] => 1999623696967882145
+            [from] => stdClass Object
+                (
+                    [id] => 465573672
+                    [is_bot] => 
+                    [first_name] => Fillippok
+                    [username] => fillippok87
+                    [language_code] => ru
+                )
+
+            [message] => stdClass Object
+                (
+                    [message_id] => 586
+                    [from] => stdClass Object
+                        (
+                            [id] => 6610572083
+                            [is_bot] => 1
+                            [first_name] => tomato_man
+                            [username] => tomato_man_bot
+                        )
+
+                    [chat] => stdClass Object
+                        (
+                            [id] => 465573672
+                            [first_name] => Fillippok
+                            [username] => fillippok87
+                            [type] => private
+                        )
+
+                    [date] => 1703955625
+                    [text] => Температура в Мысках: -4
+Ощущается как: -11.1
+Скорость ветра: 34.9
+                    [entities] => Array
+                        (
+                            [0] => stdClass Object
+                                (
+                                    [offset] => 22
+                                    [length] => 2
+                                    [type] => bold
+                                )
+
+                        )
+
+                    [reply_markup] => stdClass Object
+                        (
+                            [inline_keyboard] => Array
+                                (
+                                    [0] => Array
+                                        (
+                                            [0] => stdClass Object
+                                                (
+                                                    [text] => Прогноз на 3 дня
+                                                    [callback_data] => forecast
+                                                )
+
+                                        )
+
+                                )
+
+                        )
+
+                )
+
+            [chat_instance] => 8331330793610792242
+            [data] => forecast
+        )
+
+)
+

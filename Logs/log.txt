@@ -1,10 +1,10 @@
-29-12-2023 17:21:48
+31-12-2023 04:10:24
  stdClass Object
 (
-    [update_id] => 422956131
+    [update_id] => 422956191
     [message] => stdClass Object
         (
-            [message_id] => 514
+            [message_id] => 608
             [from] => stdClass Object
                 (
                     [id] => 465573672
@@ -22,20 +22,11 @@
                     [type] => private
                 )
 
-            [date] => 1703866908
-            [text] => /time
-            [entities] => Array
-                (
-                    [0] => stdClass Object
-                        (
-                            [offset] => 0
-                            [length] => 5
-                            [type] => bot_command
-                        )
-
-                )
-
+            [date] => 1703992224
+            [text] => rty
         )
 
 )
 
+31-12-2023 04:10:24
+ 465573672
