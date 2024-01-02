@@ -27,6 +27,9 @@
         <testsuite name="CurlPost">
             <directory suffix="Test.php">tests/unit/TelegramBot/CurlPost/CurlPostFieldBuilder</directory>
         </testsuite>
+        <testsuite name="Bot">
+            <directory suffix="Test.php">tests/unit/TelegramBot/</directory>
+        </testsuite>
     </testsuites>
 
     <coverage cacheDirectory=".phpunit.cache/code-coverage"

@@ -51,11 +51,12 @@ class TelegramBot implements iTelegramBot
         curl_setopt_array($ch, $options);
 
         $response = json_decode(curl_exec($ch), true);
-        curl_close($ch);
         
         if (curl_errno($ch)) {
             throw new CURLException(curl_error($ch));
         }
+        
+        curl_close($ch);
 
         if (empty($response['ok'])) {
 
