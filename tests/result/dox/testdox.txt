@@ -2,19 +2,27 @@ Init Web Hook
  [x] Exception
  [x] Generate url
  [x] Megic get
- [x] Init has array
  [x] Init has result
+ [x] Init has array
+
+Curl Post Field Html Builder
+ [x] Set Reply Markup inline keyboard html Builder
+ [x] Set Reply Markup inline keyboard html Builder Exception
+ [x] Html Builder
+ [x] Md Builder
+ [x] Admin Builder
+ [x] Admin Builder setMessage
 
 Time
- [x] Init has array
  [x] Get TimeHasKeyTime
+ [x] Init has array
 
 Wether
- [x] Current Weather Url
- [x] Has Static moonPhase
  [x] Forecast Weather Url
- [x] Get Forecast WeatherIsString
- [x] Get Current WeatherIsString
+ [x] Has Static moonPhase
+ [x] Current Weather Url
  [x] Get Forecast WeatherHasResult
+ [x] Get Current WeatherIsString
+ [x] Get Forecast WeatherIsString
  [x] Get Current WeatherHasResult
 
