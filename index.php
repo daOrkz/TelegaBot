@@ -35,7 +35,7 @@ $messageText = InputUser::getInput($data);
 $ErrLogger = new Logger('/Logs', '/errLogs.txt');
 $logger = new Logger();
 
-$logger->writeLog($messageText);
+//$logger->writeLog($messageText);
 //$logger->writeLog($messageText, true);
 //$logger->writeLog($data->callback_query->from->id);
 

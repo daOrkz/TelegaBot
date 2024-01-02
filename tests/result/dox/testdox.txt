@@ -1,0 +1,20 @@
+Init Web Hook
+ [x] Exception
+ [x] Generate url
+ [x] Megic get
+ [x] Init has array
+ [x] Init has result
+
+Time
+ [x] Init has array
+ [x] Get TimeHasKeyTime
+
+Wether
+ [x] Current Weather Url
+ [x] Has Static moonPhase
+ [x] Forecast Weather Url
+ [x] Get Forecast WeatherIsString
+ [x] Get Current WeatherIsString
+ [x] Get Forecast WeatherHasResult
+ [x] Get Current WeatherHasResult
+

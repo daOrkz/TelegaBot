@@ -11,8 +11,7 @@ use Bot\Exceptions\CurlException as CURLException;
 
 class Time
 {
-    
-    
+        
     static function getTime(string $city = 'Asia/Krasnoyarsk'): array
     {
         $baseURL = 'https://www.timeapi.io/api/Time/current/zone?timeZone=';
@@ -29,11 +28,11 @@ class Time
         curl_setopt_array($curl, $options);
 
         $response = curl_exec($curl);
-        curl_close($curl);
         
         if (curl_errno($curl)) {
             throw new CURLException(curl_error($curl));
         }
+        curl_close($curl);
 
         return json_decode($response, true);
     }

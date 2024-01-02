@@ -7,7 +7,7 @@
 
 namespace Bot\TelegramBot\CurlPost\CurlPostField;
 
-use Bot\TelegramBot\CurlPost\aCurlPostField;
+use Bot\TelegramBot\CurlPost\CurlPostField\aCurlPostField;
 
 /**
  * Description of CurlPostFieldHtml
@@ -25,7 +25,7 @@ class CurlPostFieldMd extends aCurlPostField
         ];
     }
     
-    public function getOpt()
+    public function getOpt(): array
     {
         return [
           'chat_id' => $this->chatId,

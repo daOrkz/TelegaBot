@@ -18,7 +18,7 @@ use Bot\Exceptions\CurlException as CURLException;
 class Weather
 {
     static string $currentWeatherUrl = 'https://weatherapi-com.p.rapidapi.com/current.json?q=53.45154224%2C87.38461796';
-    static string $forecasttWeatherUrl = 'https://weatherapi-com.p.rapidapi.com/forecast.json?q=53.45154224%2C87.38461796&days=3';
+    static string $forecastWeatherUrl = 'https://weatherapi-com.p.rapidapi.com/forecast.json?q=53.45154224%2C87.38461796&days=3';
     
     static array $curlOpt = [
         CURLOPT_RETURNTRANSFER => true,
@@ -53,11 +53,11 @@ class Weather
 
         $response = curl_exec($curl);
 
-        curl_close($curl);
-
         if (curl_errno($curl)) {
             throw new CURLException(curl_error($curl));
         }
+        
+        curl_close($curl);
 
         $currentWeather = json_decode($response, true);
         
@@ -71,18 +71,18 @@ class Weather
     static function getForecastWeather(): string
     {
 
-        $curl = curl_init(self::$forecasttWeatherUrl);
+        $curl = curl_init(self::$forecastWeatherUrl);
 
 
         curl_setopt_array($curl, self::$curlOpt);
 
         $response = curl_exec($curl);
 
-        curl_close($curl);
-
         if (curl_errno($curl)) {
             throw new CURLException(curl_error($curl));
         }
+        
+        curl_close($curl);
 
         $weather = json_decode($response, true);
         
@@ -104,6 +104,11 @@ class Weather
         }
         
         return $weathetTextMessage;
+    }
+    
+    public function __get($name)
+    {
+        return self::$name;
     }
 
 }

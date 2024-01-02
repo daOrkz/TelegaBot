@@ -1,5 +1,5 @@
 {
-    "name": "fillipp/TelegaBot",
+    "name": "fillipp/telega_bot",
     "description": "Supa Telega Bota!!! Daka Daka Daka!!!",
     "keywords": ["telegram", "telegram bot"],
     "type": "project",
@@ -14,5 +14,10 @@
         "psr-4": {
             "Bot\\": "src/"
         }
+    },
+    "scripts": {
+        "test-unit": "vendor/bin/phpunit",
+        "test-coverage": "vendor/bin/phpunit --coverage-html tests/result/html",
+        "test-group-services": "vendor/bin/phpunit --group Services"
     }
 }

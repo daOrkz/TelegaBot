@@ -6,11 +6,13 @@ use Bot\Exceptions\CurlException as CURLException;
 
 class InitWebHook
 {
-    protected string $ngrokURL;
+    protected string $Url;
+    protected array $config;
 
     public function __construct(array $config)
     {
         $this->config = $config;
+        $this->Url = $this->config['apiTelegramUrl'] . $this->config['token'];
     }
     
     protected function generateURL(): string
@@ -34,13 +36,18 @@ class InitWebHook
         curl_setopt_array($ch, $options);
 
         $response = curl_exec($ch);
-        curl_close($ch);
 
         if (curl_errno($ch)) {
             throw new CURLException(curl_error($ch));
         }
+        curl_close($ch);
 
-        return json_decode($response);
+        return json_decode($response, true);
+    }
+    
+    public function __get($name)
+    {
+        return $this->$name;
     }
 
 }
