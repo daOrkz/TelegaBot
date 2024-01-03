@@ -31,30 +31,14 @@ class WeatherCurrentCommand implements iStrategyCommand
            . "Скорость ветра: {$currentWeather['current']['wind_kph']}";
     }
     
-    public function execute($data): array
+    public function execute(): string
     {
         $fromChatId = $data->message->from->id;
 
         $currentWeather = $this->getCurrentWeather();
                  
-        $weathetTextMessage = $this->createMessage($currentWeather);
-        $inlineKeyboard = 
-        [ 
-            [
-                'text' => 'Прогноз на 3 дня',
-                'callback_data' => 'forecast',
-            ]
-        ];
-
-        $sendMessageCurlPostField = (new CurlPostFieldHtmlBuilder())
-            ->init()
-            ->setChatId($fromChatId)
-            ->setParse_mode('html')
-            ->setText($weathetTextMessage)
-            ->setReplyMarkup('inline_keyboard', $inlineKeyboard)
-            ->build();
-
-        return $sendMessageCurlPostField->getOpt();
+        return $this->createMessage($currentWeather);
+        
     }
 }
 

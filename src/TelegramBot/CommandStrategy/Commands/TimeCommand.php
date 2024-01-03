@@ -34,8 +34,7 @@ class TimeCommand implements iStrategyCommand
     {
         $currentTime = $this->getTime();
         
-        $timeTextMessage = $this->createMessage($currentTime);
+        return $this->createMessage($currentTime);
         
-        return $timeTextMessage;
     }
 }

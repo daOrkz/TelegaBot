@@ -11,7 +11,10 @@ use Bot\Exceptions\{
     CurlException,
     TeleBotException
 };
-use Bot\Util\{Logger, InputUser};
+use Bot\Util\{
+    Logger,
+    InputUser
+};
 use Bot\TelegramBot\CurlPost\CurlPostFieldBuilder\{
     CurlPostFieldHtmlBuilder,
     CurlPostFieldAdminBuilder,
@@ -51,11 +54,13 @@ $sendMessageCurlPostFieldAdmin = (new CurlPostFieldAdminBuilder())
 
 $contextCommand = new ContextCommand();
 
-$messageText = '/time';
+//$messageText = '/weather';
 try {
     switch ($messageText) {
         case '/start':
+
             $contextCommand->setStrategy(new StartCommand());
+
             $curlOpt = $contextCommand->executeStrategy();
 
             $telegramBot->sendResponseTelegram('sendMessage', $curlOpt);
@@ -64,18 +69,18 @@ try {
 
         case '/time':
             $contextCommand->setStrategy(new TimeCommand());
-            
+
             $timeTextMessage = $contextCommand->executeStrategy();
-            
+
             $fromChatId = $data->message->from->id;
 
             $sendMessageCurlPostField = (new CurlPostFieldHtmlBuilder())
-            ->init()
-            ->setChatId($fromChatId)
-            ->setParse_mode('html')
-            ->setText($timeTextMessage)
-            ->build();
-            
+                ->init()
+                ->setChatId($fromChatId)
+                ->setParse_mode('html')
+                ->setText($timeTextMessage)
+                ->build();
+
             $curlOpt = $sendMessageCurlPostField->getOpt();
 
             $telegramBot->sendResponseTelegram('sendMessage', $curlOpt);
@@ -84,16 +89,36 @@ try {
 
         case '/weather':
             $contextCommand->setStrategy(new WeatherCurrentCommand());
-            $curlOpt = $contextCommand->executeStrategy($data);
+            
+            $weathetTextMessage = $contextCommand->executeStrategy();
+            
+            $fromChatId = $data->message->from->id;
+
+            $inlineKeyboard = [
+                [
+                    'text' => 'Прогноз на 3 дня',
+                    'callback_data' => 'forecast',
+                ]
+            ];
+
+            $sendMessageCurlPostField = (new CurlPostFieldHtmlBuilder())
+                ->init()
+                ->setChatId($fromChatId)
+                ->setParse_mode('html')
+                ->setText($weathetTextMessage)
+                ->setReplyMarkup('inline_keyboard', $inlineKeyboard)
+                ->build();
+
+            $curlOpt = $sendMessageCurlPostField->getOpt();
 
             $telegramBot->sendResponseTelegram('sendMessage', $curlOpt);
 
             break;
-        
+
         case 'forecast':
             $contextCommand->setStrategy(new WeatherForecastCommand());
             $curlOpt = $contextCommand->executeStrategy($data);
-        
+
             $telegramBot->sendResponseTelegram('sendMessage', $curlOpt);
 
             break;
@@ -104,12 +129,12 @@ try {
                 ->setChatId($data->message->from->id)
                 ->setParse_mode('html')
                 ->setText(
-                      "Неизвестная команда." . PHP_EOL
+                    "Неизвестная команда." . PHP_EOL
                     . "Выберите команду из списка в меню.")
                 ->build();
-            
+
             $curlOpt = $sendMessageCurlPostField->getOpt();
-            
+
             $telegramBot->sendResponseTelegram('sendMessage', $curlOpt);
             break;
     }
