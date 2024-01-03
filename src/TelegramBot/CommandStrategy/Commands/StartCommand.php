@@ -18,19 +18,22 @@ use Bot\TelegramBot\CurlPost\CurlPostFieldBuilder\CurlPostFieldHtmlBuilder;
  */
 class StartCommand implements iStrategyCommand
 {
-    public function execute($data): array
+    protected $data;
+    
+    public function __construct($data)
     {
-        $fromChatId = $data->message->from->id;
-
-        $helloTextMessage = "Hello: <b>{$data->message->from->first_name}</b>" . PHP_EOL;
+        $this->data = $data;
+    }
+    
+    protected function createMessage(): string
+    {
+        return "Hello: <b>{$this->data->message->from->first_name}</b>" . PHP_EOL;
+    }
+    
+    public function execute(): string
+    {
         
-        $sendMessageCurlPostField = (new CurlPostFieldHtmlBuilder())
-            ->init()
-            ->setChatId($fromChatId)
-            ->setParse_mode('html')
-            ->setText($helloTextMessage)
-            ->build();
-
-        return $sendMessageCurlPostField->getOpt();
+        return $this->createMessage();
+        
     }
 }

@@ -33,6 +33,9 @@ $config = parse_ini_file('config.ini');
 
 $data = json_decode(file_get_contents('php://input'));
 
+$fromChatId = $data->message->from->id;
+
+
 $messageText = InputUser::getInput($data);
 
 $ErrLogger = new Logger('/Logs', '/errLogs.txt');
@@ -59,9 +62,18 @@ try {
     switch ($messageText) {
         case '/start':
 
-            $contextCommand->setStrategy(new StartCommand());
+            $contextCommand->setStrategy(new StartCommand($data));
 
-            $curlOpt = $contextCommand->executeStrategy();
+            $helloTextMessage = $contextCommand->executeStrategy();
+            
+            $sendMessageCurlPostField = (new CurlPostFieldHtmlBuilder())
+            ->init()
+            ->setChatId($fromChatId)
+            ->setParse_mode('html')
+            ->setText($helloTextMessage)
+            ->build();
+
+            $curlOpt = $sendMessageCurlPostField->getOpt();
 
             $telegramBot->sendResponseTelegram('sendMessage', $curlOpt);
 
@@ -72,7 +84,6 @@ try {
 
             $timeTextMessage = $contextCommand->executeStrategy();
 
-            $fromChatId = $data->message->from->id;
 
             $sendMessageCurlPostField = (new CurlPostFieldHtmlBuilder())
                 ->init()
@@ -92,8 +103,6 @@ try {
             
             $weathetTextMessage = $contextCommand->executeStrategy();
             
-            $fromChatId = $data->message->from->id;
-
             $inlineKeyboard = [
                 [
                     'text' => 'Прогноз на 3 дня',
@@ -120,8 +129,6 @@ try {
             
             $weathetTextMessage = $contextCommand->executeStrategy();
             
-            $fromChatId = $data->callback_query->from->id;
-            
             $sendMessageCurlPostField = (new CurlPostFieldHtmlBuilder())
             ->init()
             ->setChatId($fromChatId)
@@ -138,7 +145,7 @@ try {
         default:
             $sendMessageCurlPostField = (new CurlPostFieldHtmlBuilder())
                 ->init()
-                ->setChatId($data->message->from->id)
+                ->setChatId($fromChatId)
                 ->setParse_mode('html')
                 ->setText(
                     "Неизвестная команда." . PHP_EOL
