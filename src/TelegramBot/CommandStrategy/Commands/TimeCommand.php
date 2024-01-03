@@ -19,13 +19,24 @@ use Bot\Services\Time;
  */
 class TimeCommand implements iStrategyCommand
 {
+    
+    protected function setTime()
+    {
+        return Time::getTime();
+    }
+    
+    protected function createMessage(array $currentTime)
+    {
+        return "Текущее время: <b>{$currentTime['time']}</b>" . PHP_EOL;
+    }
+    
     public function execute($data): array
     {
         $fromChatId = $data->message->from->id;
 
-        $curretnTime = Time::getTime();
+        $currentTime = $this->setTime();
         
-        $timeTextMessage = "Текущее время: <b>{$curretnTime['time']}</b>" . PHP_EOL;
+        $timeTextMessage = $this->createMessage($currentTime);
         
         $sendMessageCurlPostField = (new CurlPostFieldHtmlBuilder())
             ->init()

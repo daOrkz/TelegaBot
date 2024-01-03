@@ -11,94 +11,43 @@ use Bot\Util\Logger as Logger;
 $ErrLogger = new Logger('/Logs', '/errLogs.txt');
 $logger = new Logger();
 
-class Weather
+
+
+use Bot\TelegramBot\CurlPost\CurlPostFieldBuilder\CurlPostFieldHtmlBuilder;
+
+use Bot\Services\Time;
+
+/**
+ * Description of StartCommand
+ *
+ * @author fillipp
+ */
+class TimeCommand
 {
-    static string $currentWeatherUrl = 'https://weatherapi-com.p.rapidapi.com/current.json?q=53.45154224%2C87.38461796';
-    static string $forecasttWeatherUrl = 'https://weatherapi-com.p.rapidapi.com/forecast.json?q=53.45154224%2C87.38461796&days=3';
     
-    static array $curlOpt = [
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_ENCODING => "",
-        CURLOPT_MAXREDIRS => 10,
-        CURLOPT_TIMEOUT => 30,
-        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-        CURLOPT_CUSTOMREQUEST => "GET",
-        CURLOPT_HTTPHEADER => [
-            "X-RapidAPI-Host: weatherapi-com.p.rapidapi.com",
-            "X-RapidAPI-Key: 54e1575496msh4b881834862ec00p1160f5jsn5e68d631b210"
-        ],
-    ];
-    static array $moonPhase = [
-        'New Moon' => 'Новолуние',
-        'Waxing Crescent' => 'Растущая луна',
-        'First Quarter' => 'Первая четверть луны',
-        'Waxing Gibbous' => 'Почти полная, возррастающая луна',
-        'Full Moon' => 'Полнлуние',
-        'Waning Gibbous' => 'Почти полная, убывающая луна',
-        'Last Quarter' => 'Последняя четверть луны',
-        'Waning Crescen' => 'Месяц',
-    ];
-
-    static function getCurrentWeather(): string
+    protected function setTime(Time $time = null)
+    {
+        return Time::getTime();
+    }
+    
+    public function execute()
     {
 
-        $curl = curl_init(self::$currentWeatherUrl);
-
-        curl_setopt_array($curl, self::$curlOpt);
-
-        $response = curl_exec($curl);
-
-        curl_close($curl);
-
-        if (curl_errno($curl)) {
-            throw new CURLException(curl_error($curl));
-        }
-
-        $currentWeather = json_decode($response, true);
+        $curretnTime = $this->setTime();
         
-        $weathetTextMessage = "Температура в Мысках: <b>{$currentWeather['current']['temp_c']}</b>" . PHP_EOL
-           . "Ощущается как: {$currentWeather['current']['feelslike_c']}" . PHP_EOL
-           . "Скорость ветра: {$currentWeather['current']['wind_kph']}";
-           
-       return $weathetTextMessage;
+        $timeTextMessage = "Текущее время: <b>{$curretnTime['time']}</b>" . PHP_EOL;
+        
+//        $sendMessageCurlPostField = (new CurlPostFieldHtmlBuilder())
+//            ->init()
+//            ->setChatId($fromChatId)
+//            ->setParse_mode('html')
+//            ->setText($timeTextMessage)
+//            ->build();
+//
+//        return $sendMessageCurlPostField->getOpt();
+        echo $timeTextMessage;
     }
-
-    static function getForecastWeather(): string
-    {
-
-        $curl = curl_init(self::$forecasttWeatherUrl);
-
-
-        curl_setopt_array($curl, self::$curlOpt);
-
-        $response = curl_exec($curl);
-
-        curl_close($curl);
-
-        if (curl_errno($curl)) {
-            throw new CURLException(curl_error($curl));
-        }
-
-        $weather = json_decode($response, true);
-        
-        $forecastDays = $weather['forecast']['forecastday'];
-
-        $weathetTextMessage = '';
-        
-        foreach ($forecastDays as $forecastDay) {
-
-            $weathetTextMessage .= " -- <b>{$forecastDay['date']}</b> -- <br>"
-            . "Температура от {$forecastDay['day']['maxtemp_c']} до {$forecastDay['day']['mintemp_c']} <br>"
-            . "Вероятность снега: {$forecastDay['day']['daily_chance_of_snow']}% <br>"
-            . "Вероятность дождя: {$forecastDay['day']['daily_chance_of_rain']}% <br>"
-            . "Восход: {$forecastDay['astro']['sunrise']} <br>"
-            . "Закат: {$forecastDay['astro']['sunset']} <br>"
-            . "Фаза луны: " . self::$moonPhase[$forecastDay['astro']['moon_phase']] . "<br>"
-            . "Видимость луны: {$forecastDay['astro']['moon_illumination']}% <br>"
-            . '<br>';
-        }
-        
-        return $weathetTextMessage;
-    }
-
 }
+
+$time = new TimeCommand();
+$time->execute();
