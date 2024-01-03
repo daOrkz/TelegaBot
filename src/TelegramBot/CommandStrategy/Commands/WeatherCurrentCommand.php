@@ -19,12 +19,25 @@ use Bot\Services\Weather;
  */
 class WeatherCurrentCommand implements iStrategyCommand
 {
+    protected function getCurrentWeather()
+    {
+        return Weather::getCurrentWeather();
+    }
+    
+    protected function createMessage(array $currentWeather)
+    {
+        return "Температура в Мысках: <b>{$currentWeather['current']['temp_c']}</b>" . PHP_EOL
+           . "Ощущается как: {$currentWeather['current']['feelslike_c']}" . PHP_EOL
+           . "Скорость ветра: {$currentWeather['current']['wind_kph']}";
+    }
+    
     public function execute($data): array
     {
         $fromChatId = $data->message->from->id;
 
-        $weathetTextMessage = Weather::getCurrentWeather();
-                            
+        $currentWeather = $this->getCurrentWeather();
+                 
+        $weathetTextMessage = $this->createMessage($currentWeather);
         $inlineKeyboard = 
         [ 
             [
@@ -44,3 +57,4 @@ class WeatherCurrentCommand implements iStrategyCommand
         return $sendMessageCurlPostField->getOpt();
     }
 }
+

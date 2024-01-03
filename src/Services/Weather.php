@@ -44,7 +44,7 @@ class Weather
         'Waning Crescen' => 'Месяц',
     ];
 
-    static function getCurrentWeather(): string
+    static function getCurrentWeather(): array
     {
 
         $curl = curl_init(self::$currentWeatherUrl);
@@ -59,13 +59,10 @@ class Weather
         
         curl_close($curl);
 
-        $currentWeather = json_decode($response, true);
+        return json_decode($response, true);
         
-        $weathetTextMessage = "Температура в Мысках: <b>{$currentWeather['current']['temp_c']}</b>" . PHP_EOL
-           . "Ощущается как: {$currentWeather['current']['feelslike_c']}" . PHP_EOL
-           . "Скорость ветра: {$currentWeather['current']['wind_kph']}";
+        
            
-       return $weathetTextMessage;
     }
 
     static function getForecastWeather(): string
