@@ -20,12 +20,12 @@ use Bot\Services\Time;
 class TimeCommand implements iStrategyCommand
 {
     
-    protected function setTime()
+    protected function getTime(): array
     {
         return Time::getTime();
     }
     
-    protected function createMessage(array $currentTime)
+    protected function createMessage(array $currentTime): string
     {
         return "Текущее время: <b>{$currentTime['time']}</b>" . PHP_EOL;
     }
@@ -34,7 +34,7 @@ class TimeCommand implements iStrategyCommand
     {
         $fromChatId = $data->message->from->id;
 
-        $currentTime = $this->setTime();
+        $currentTime = $this->getTime();
         
         $timeTextMessage = $this->createMessage($currentTime);
         

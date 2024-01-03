@@ -19,12 +19,12 @@ use Bot\Services\Weather;
  */
 class WeatherCurrentCommand implements iStrategyCommand
 {
-    protected function getCurrentWeather()
+    protected function getCurrentWeather(): array
     {
         return Weather::getCurrentWeather();
     }
     
-    protected function createMessage(array $currentWeather)
+    protected function createMessage(array $currentWeather): string
     {
         return "Температура в Мысках: <b>{$currentWeather['current']['temp_c']}</b>" . PHP_EOL
            . "Ощущается как: {$currentWeather['current']['feelslike_c']}" . PHP_EOL

@@ -33,17 +33,6 @@ class Weather
         ],
     ];
     
-    static array $moonPhase = [
-        'New Moon' => 'Новолуние',
-        'Waxing Crescent' => 'Растущая луна',
-        'First Quarter' => 'Первая четверть луны',
-        'Waxing Gibbous' => 'Почти полная, возррастающая луна',
-        'Full Moon' => 'Полнлуние',
-        'Waning Gibbous' => 'Почти полная, убывающая луна',
-        'Last Quarter' => 'Последняя четверть луны',
-        'Waning Crescen' => 'Месяц',
-    ];
-
     static function getCurrentWeather(): array
     {
 
@@ -61,11 +50,9 @@ class Weather
 
         return json_decode($response, true);
         
-        
-           
     }
 
-    static function getForecastWeather(): string
+    static function getForecastWeather(): array
     {
 
         $curl = curl_init(self::$forecastWeatherUrl);
@@ -81,26 +68,8 @@ class Weather
         
         curl_close($curl);
 
-        $weather = json_decode($response, true);
+        return json_decode($response, true);  
         
-        $forecastDays = $weather['forecast']['forecastday'];
-
-        $weathetTextMessage = '';
-        
-        foreach ($forecastDays as $forecastDay) {
-
-            $weathetTextMessage .= " -- <b>{$forecastDay['date']}</b> --" . PHP_EOL
-            . "Температура от {$forecastDay['day']['maxtemp_c']} до {$forecastDay['day']['mintemp_c']}" . PHP_EOL
-            . "Вероятность снега: {$forecastDay['day']['daily_chance_of_snow']}%" . PHP_EOL
-            . "Вероятность дождя: {$forecastDay['day']['daily_chance_of_rain']}%" . PHP_EOL
-            . "Восход: {$forecastDay['astro']['sunrise']}" . PHP_EOL
-            . "Закат: {$forecastDay['astro']['sunset']}" . PHP_EOL
-            . "Фаза луны: " . self::$moonPhase[$forecastDay['astro']['moon_phase']] . PHP_EOL
-            . "Видимость луны: {$forecastDay['astro']['moon_illumination']}%" . PHP_EOL
-            . PHP_EOL;
-        }
-        
-        return $weathetTextMessage;
     }
     
     public function __get($name)
