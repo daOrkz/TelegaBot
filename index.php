@@ -117,7 +117,19 @@ try {
 
         case 'forecast':
             $contextCommand->setStrategy(new WeatherForecastCommand());
-            $curlOpt = $contextCommand->executeStrategy($data);
+            
+            $weathetTextMessage = $contextCommand->executeStrategy();
+            
+            $fromChatId = $data->callback_query->from->id;
+            
+            $sendMessageCurlPostField = (new CurlPostFieldHtmlBuilder())
+            ->init()
+            ->setChatId($fromChatId)
+            ->setParse_mode('html')
+            ->setText($weathetTextMessage)
+            ->build();
+
+            $curlOpt =  $sendMessageCurlPostField->getOpt();
 
             $telegramBot->sendResponseTelegram('sendMessage', $curlOpt);
 

@@ -57,22 +57,13 @@ class WeatherForecastCommand implements iStrategyCommand
         return $weatherTextMessage;
     }
     
-    public function execute($data): array
+    public function execute(): string
     {
-        $fromChatId = $data->callback_query->from->id;
 
         $forecastWeather = $this->getForecastWeather();
         
-        $weathetTextMessage = $this->createMessage($forecastWeather);
+        return $this->createMessage($forecastWeather);
         
-        $sendMessageCurlPostField = (new CurlPostFieldHtmlBuilder())
-            ->init()
-            ->setChatId($fromChatId)
-            ->setParse_mode('html')
-            ->setText($weathetTextMessage)
-            ->build();
-
-        return $sendMessageCurlPostField->getOpt();
     }
 }
 

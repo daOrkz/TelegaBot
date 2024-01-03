@@ -33,8 +33,6 @@ class WeatherCurrentCommand implements iStrategyCommand
     
     public function execute(): string
     {
-        $fromChatId = $data->message->from->id;
-
         $currentWeather = $this->getCurrentWeather();
                  
         return $this->createMessage($currentWeather);
