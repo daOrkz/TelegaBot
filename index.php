@@ -51,12 +51,12 @@ $sendMessageCurlPostFieldAdmin = (new CurlPostFieldAdminBuilder())
 
 $contextCommand = new ContextCommand();
 
-//$messageText = 'forecast';
+$messageText = '/time';
 try {
     switch ($messageText) {
         case '/start':
             $contextCommand->setStrategy(new StartCommand());
-            $curlOpt = $contextCommand->executeStrategy($data);
+            $curlOpt = $contextCommand->executeStrategy();
 
             $telegramBot->sendResponseTelegram('sendMessage', $curlOpt);
 
@@ -64,7 +64,19 @@ try {
 
         case '/time':
             $contextCommand->setStrategy(new TimeCommand());
-            $curlOpt = $contextCommand->executeStrategy($data);
+            
+            $timeTextMessage = $contextCommand->executeStrategy();
+            
+            $fromChatId = $data->message->from->id;
+
+            $sendMessageCurlPostField = (new CurlPostFieldHtmlBuilder())
+            ->init()
+            ->setChatId($fromChatId)
+            ->setParse_mode('html')
+            ->setText($timeTextMessage)
+            ->build();
+            
+            $curlOpt = $sendMessageCurlPostField->getOpt();
 
             $telegramBot->sendResponseTelegram('sendMessage', $curlOpt);
 

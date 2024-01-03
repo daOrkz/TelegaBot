@@ -14,5 +14,5 @@ namespace Bot\TelegramBot\CommandStrategy;
  */
 interface iStrategyCommand
 {
-    public function execute(string $command): array;
+    public function execute(): string;
 }

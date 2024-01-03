@@ -30,21 +30,12 @@ class TimeCommand implements iStrategyCommand
         return "Текущее время: <b>{$currentTime['time']}</b>" . PHP_EOL;
     }
     
-    public function execute($data): array
+    public function execute(): string
     {
-        $fromChatId = $data->message->from->id;
-
         $currentTime = $this->getTime();
         
         $timeTextMessage = $this->createMessage($currentTime);
         
-        $sendMessageCurlPostField = (new CurlPostFieldHtmlBuilder())
-            ->init()
-            ->setChatId($fromChatId)
-            ->setParse_mode('html')
-            ->setText($timeTextMessage)
-            ->build();
-
-        return $sendMessageCurlPostField->getOpt();
+        return $timeTextMessage;
     }
 }
