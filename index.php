@@ -30,6 +30,7 @@ use Bot\TelegramBot\CommandStrategy\Commands\{
 use Bot\TelegramBot\TelegramBot;
 
 use Bot\Facades\Commands\{Start, Time, Weather, Forecast, UnknownCommand};
+use Bot\Facades\Commands;
 
 $config = parse_ini_file('config.ini');
 
@@ -80,7 +81,8 @@ try {
  
  */
             
-            Start::startCommand($data, $config);
+//            Start::startCommand($data, $config);
+            Commands::start($data, $config);
             
             break;
 
@@ -103,7 +105,8 @@ try {
             $telegramBot->sendResponseTelegram('sendMessage', $curlOpt);
             */
             
-            Time::timeCommand($data, $config);
+//            Time::timeCommand($data, $config);
+            Commands::time($data, $config);
             
             break;
 
@@ -133,7 +136,8 @@ try {
             $telegramBot->sendResponseTelegram('sendMessage', $curlOpt);
             */
             
-            Weather::weatherCommand($data, $config);
+//            Weather::weatherCommand($data, $config);
+            Commands::weather($data, $config);
             
             break;
 
@@ -176,7 +180,8 @@ try {
              
              */
             
-            UnknownCommand::unknownCommand($data, $config);
+//            UnknownCommand::unknownCommand($data, $config);
+            Commands::forecast($data, $config);
             
             break;
     }
