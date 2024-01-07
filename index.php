@@ -29,7 +29,7 @@ use Bot\TelegramBot\CommandStrategy\Commands\{
 };
 use Bot\TelegramBot\TelegramBot;
 
-use Bot\Facades\Commands\{Start, Time, Weather, Forecast};
+use Bot\Facades\Commands\{Start, Time, Weather, Forecast, UnknownCommand};
 
 $config = parse_ini_file('config.ini');
 
@@ -160,6 +160,7 @@ try {
             break;
 
         default:
+            /**
             $sendMessageCurlPostField = (new CurlPostFieldHtmlBuilder())
                 ->init()
                 ->setChatId($fromChatId)
@@ -172,6 +173,11 @@ try {
             $curlOpt = $sendMessageCurlPostField->getOpt();
 
             $telegramBot->sendResponseTelegram('sendMessage', $curlOpt);
+             
+             */
+            
+            UnknownCommand::unknownCommand($data, $config);
+            
             break;
     }
 } catch (TeleBotException $e) {
