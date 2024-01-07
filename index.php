@@ -29,6 +29,8 @@ use Bot\TelegramBot\CommandStrategy\Commands\{
 };
 use Bot\TelegramBot\TelegramBot;
 
+use Bot\Facades\Commands\{Start, Time};
+
 $config = parse_ini_file('config.ini');
 
 $data = json_decode(file_get_contents('php://input'));
@@ -57,11 +59,11 @@ $sendMessageCurlPostFieldAdmin = (new CurlPostFieldAdminBuilder())
 
 $contextCommand = new ContextCommand();
 
-//$messageText = '/weather';
+//$messageText = '/start';
 try {
     switch ($messageText) {
         case '/start':
-
+/**
             $contextCommand->setStrategy(new StartCommand($data));
 
             $helloTextMessage = $contextCommand->executeStrategy();
@@ -76,10 +78,15 @@ try {
             $curlOpt = $sendMessageCurlPostField->getOpt();
 
             $telegramBot->sendResponseTelegram('sendMessage', $curlOpt);
-
+ 
+ */
+            
+            Start::startCommand($data, $config);
+            
             break;
 
         case '/time':
+            /**
             $contextCommand->setStrategy(new TimeCommand());
 
             $timeTextMessage = $contextCommand->executeStrategy();
@@ -95,7 +102,10 @@ try {
             $curlOpt = $sendMessageCurlPostField->getOpt();
 
             $telegramBot->sendResponseTelegram('sendMessage', $curlOpt);
-
+            */
+            
+            Time::timeCommand($data, $config);
+            
             break;
 
         case '/weather':
