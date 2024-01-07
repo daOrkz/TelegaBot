@@ -27,13 +27,13 @@ class TelegramBot implements iTelegramBot
         $this->config = $config;
     }
     
-    protected function setBaseUrl()
+    protected function setBaseUrl(): void
     {
         $this->baseUrl = $this->config['apiTelegramUrl'] . $this->config['token'];
         
     }
 
-    public function sendResponseTelegram(string $method, array $postField, $resultJSON = false)
+    public function sendResponseTelegram(string $method, array $postField, $resultJSON = false): array
     {
         $this->setBaseUrl();
         

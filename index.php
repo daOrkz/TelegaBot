@@ -20,17 +20,12 @@ use Bot\TelegramBot\CurlPost\CurlPostFieldBuilder\{
     CurlPostFieldAdminBuilder,
     CurlPostFieldMdBuilder
 };
-use Bot\TelegramBot\CommandStrategy\ContextCommand;
-use Bot\TelegramBot\CommandStrategy\Commands\{
-    StartCommand,
-    WeatherCurrentCommand,
-    WeatherForecastCommand,
-    TimeCommand
-};
+//use Bot\TelegramBot\CommandStrategy\ContextCommand;
+
 use Bot\TelegramBot\TelegramBot;
 
-use Bot\Facades\Commands\{Start, Time, Weather, Forecast, UnknownCommand};
-use Bot\Facades\Commands;
+//use Bot\Facades\Commands\{Start, Time, Weather, Forecast, UnknownCommand};
+use Bot\Facades\{Commands, Exception};
 
 $config = parse_ini_file('config.ini');
 
@@ -57,9 +52,9 @@ $sendMessageCurlPostFieldAdmin = (new CurlPostFieldAdminBuilder())
     ->setParse_mode('html')
     ->build();
 
-$contextCommand = new ContextCommand();
+//$contextCommand = new ContextCommand();
 
-//$messageText = '/start';
+//$messageText = '/time';
 try {
     switch ($messageText) {
         case '/start':
@@ -187,24 +182,40 @@ try {
     }
 } catch (TeleBotException $e) {
     $ErrLogger->writeLog($e->sendErrorMessage());
-
+    /**
     $sendMessageCurlPostFieldAdmin->setMessage($e->sendErrorMessage());
 
     $curlOpt = $sendMessageCurlPostFieldAdmin->getOpt();
     $telegramBot->sendResponseTelegram('sendMessage', $curlOpt);
+     * 
+     */
+    
+    Exception::handling($e, $config);
+    
 } catch (CurlException $e) {
     $ErrLogger->writeLog($e->sendErrorMessage());
-
+    /**
     $sendMessageCurlPostFieldAdmin->setMessage($e->sendErrorMessage());
     $curlOpt = $sendMessageCurlPostFieldAdmin->getOpt();
 
     $telegramBot->sendResponseTelegram('sendMessage', $curlOpt);
+     * 
+     */
+    
+    Exception::handling($e, $config);
+
 } catch (CommonException $e) {
     $message = $e->getTraceAsString() . PHP_EOL . $e->getMessage();
     $ErrLogger->writeLog($message);
 
+    /**
     $sendMessageCurlPostFieldAdmin->setMessage($message);
     $curlOpt = $sendMessageCurlPostFieldAdmin->getOpt();
 
     $telegramBot->sendResponseTelegram('sendMessage', $curlOpt);
+     * 
+     */
+    
+    Exception::handling($e, $config);
+
 }
