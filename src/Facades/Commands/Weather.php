@@ -7,15 +7,20 @@
 
 namespace Bot\Facades\Commands;
 
-use Bot\TelegramBot\CommandStrategy\Commands\TimeCommand;
+use Bot\TelegramBot\CommandStrategy\Commands\WeatherCurrentCommand;
 use Bot\TelegramBot\CommandStrategy\ContextCommand;
 use Bot\TelegramBot\CurlPost\CurlPostFieldBuilder\CurlPostFieldHtmlBuilder;
 use Bot\TelegramBot\TelegramBot;
 use Bot\Util\InputUser;
 
-class Time
+/**
+ * Description of StartFacade
+ *
+ * @author fillipp
+ */
+class Weather
 {
-    static function timeCommand($data, $config)
+    static function weatherCommand($data, $config)
     {
         $fromChatId = InputUser::fromChatId($data);
 
@@ -23,15 +28,23 @@ class Time
         $contextCommand = new ContextCommand();
         $telegramBot = new TelegramBot($config);
 
-        $contextCommand->setStrategy(new TimeCommand());
+        $contextCommand->setStrategy(new WeatherCurrentCommand());
 
-        $timeTextMessage = $contextCommand->executeStrategy();
+        $weathetTextMessage = $contextCommand->executeStrategy();
+
+        $inlineKeyboard = [
+            [
+                'text' => 'Прогноз на 3 дня',
+                'callback_data' => 'forecast',
+            ]
+        ];
 
         $sendMessageCurlPostField = (new CurlPostFieldHtmlBuilder())
             ->init()
             ->setChatId($fromChatId)
             ->setParse_mode('html')
-            ->setText($timeTextMessage)
+            ->setText($weathetTextMessage)
+            ->setReplyMarkup('inline_keyboard', $inlineKeyboard)
             ->build();
 
         $curlOpt = $sendMessageCurlPostField->getOpt();

@@ -7,30 +7,21 @@
 
 namespace Bot\Facades\Commands;
 
-//use Bot\Facades\iCommandFacade;
-
-//require_once ('../../../src/init.php');
-
 use Bot\TelegramBot\CommandStrategy\Commands\StartCommand;
 use Bot\TelegramBot\CommandStrategy\ContextCommand;
 use Bot\TelegramBot\CurlPost\CurlPostFieldBuilder\CurlPostFieldHtmlBuilder;
 use Bot\TelegramBot\TelegramBot;
+use Bot\Util\InputUser;
 
-//$config = \parse_ini_file('../../../config.ini');
-/**
- * Description of StartFacade
- *
- * @author fillipp
- */
 class Start
 {
     static function startCommand($data, $config)
     {
-        $fromChatId = $data->message->from->id;
+//        $fromChatId = $data->message->from->id;
+        $fromChatId = InputUser::fromChatId($data);
 
         $contextCommand = new ContextCommand();
         $telegramBot = new TelegramBot($config);
-
 
         $contextCommand->setStrategy(new StartCommand($data));
 

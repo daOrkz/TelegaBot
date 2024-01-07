@@ -24,7 +24,17 @@ class InputUser
         if($data->callback_query){
             return $data->callback_query->data;
         }
+    }
+    
+    static function fromChatId($data)
+    {
+        if($data->message){
+            return$data->message->from->id;
+        }
         
+        if($data->callback_query){
+            return $data->callback_query->from->id;
+        }
     }
 }
 

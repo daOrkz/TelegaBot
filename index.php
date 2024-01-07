@@ -29,14 +29,13 @@ use Bot\TelegramBot\CommandStrategy\Commands\{
 };
 use Bot\TelegramBot\TelegramBot;
 
-use Bot\Facades\Commands\{Start, Time};
+use Bot\Facades\Commands\{Start, Time, Weather, Forecast};
 
 $config = parse_ini_file('config.ini');
 
 $data = json_decode(file_get_contents('php://input'));
 
-$fromChatId = $data->message->from->id;
-
+$fromChatId = InputUser::fromChatId($data);
 
 $messageText = InputUser::getInput($data);
 
@@ -109,6 +108,7 @@ try {
             break;
 
         case '/weather':
+            /**
             $contextCommand->setStrategy(new WeatherCurrentCommand());
             
             $weathetTextMessage = $contextCommand->executeStrategy();
@@ -131,10 +131,14 @@ try {
             $curlOpt = $sendMessageCurlPostField->getOpt();
 
             $telegramBot->sendResponseTelegram('sendMessage', $curlOpt);
-
+            */
+            
+            Weather::weatherCommand($data, $config);
+            
             break;
 
         case 'forecast':
+            /**
             $contextCommand->setStrategy(new WeatherForecastCommand());
             
             $weathetTextMessage = $contextCommand->executeStrategy();
@@ -149,7 +153,10 @@ try {
             $curlOpt =  $sendMessageCurlPostField->getOpt();
 
             $telegramBot->sendResponseTelegram('sendMessage', $curlOpt);
-
+            */
+            
+            Forecast::forecastCommand($data, $config);
+            
             break;
 
         default:

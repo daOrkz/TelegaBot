@@ -7,31 +7,30 @@
 
 namespace Bot\Facades\Commands;
 
-use Bot\TelegramBot\CommandStrategy\Commands\TimeCommand;
+use Bot\TelegramBot\CommandStrategy\Commands\WeatherForecastCommand;
 use Bot\TelegramBot\CommandStrategy\ContextCommand;
 use Bot\TelegramBot\CurlPost\CurlPostFieldBuilder\CurlPostFieldHtmlBuilder;
 use Bot\TelegramBot\TelegramBot;
 use Bot\Util\InputUser;
 
-class Time
+class Forecast
 {
-    static function timeCommand($data, $config)
+    static function forecastCommand($data, $config)
     {
         $fromChatId = InputUser::fromChatId($data);
-
 
         $contextCommand = new ContextCommand();
         $telegramBot = new TelegramBot($config);
 
-        $contextCommand->setStrategy(new TimeCommand());
+        $contextCommand->setStrategy(new WeatherForecastCommand());
 
-        $timeTextMessage = $contextCommand->executeStrategy();
+        $weathetTextMessage = $contextCommand->executeStrategy();
 
         $sendMessageCurlPostField = (new CurlPostFieldHtmlBuilder())
             ->init()
             ->setChatId($fromChatId)
             ->setParse_mode('html')
-            ->setText($timeTextMessage)
+            ->setText($weathetTextMessage)
             ->build();
 
         $curlOpt = $sendMessageCurlPostField->getOpt();
