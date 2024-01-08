@@ -1,9 +1,9 @@
-08-01-2024 00:55:13
+08-01-2024 01:54:06
  Curl Exception
 Error on line 33 : Couldn't resolve host 'Asia'
 #0 /home/fillipp/www/localhost/src/TelegramBot/CommandStrategy/Commands/TimeCommand.php(25): Bot\Services\Time::getTime()
 #1 /home/fillipp/www/localhost/src/TelegramBot/CommandStrategy/Commands/TimeCommand.php(35): Bot\TelegramBot\CommandStrategy\Commands\TimeCommand->getTime()
 #2 /home/fillipp/www/localhost/src/TelegramBot/CommandStrategy/ContextCommand.php(28): Bot\TelegramBot\CommandStrategy\Commands\TimeCommand->execute()
-#3 /home/fillipp/www/localhost/src/Facades/Commands.php(60): Bot\TelegramBot\CommandStrategy\ContextCommand->executeStrategy()
-#4 /home/fillipp/www/localhost/index.php(104): Bot\Facades\Commands::time(Object(stdClass), Array)
+#3 /home/fillipp/www/localhost/src/Facades/Commands.php(58): Bot\TelegramBot\CommandStrategy\ContextCommand->executeStrategy()
+#4 /home/fillipp/www/localhost/index.php(67): Bot\Facades\Commands::time(Object(stdClass), Array)
 #5 {main}

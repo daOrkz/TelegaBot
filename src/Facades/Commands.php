@@ -11,7 +11,6 @@ use Bot\TelegramBot\CommandStrategy\Commands\StartCommand;
 use Bot\TelegramBot\CommandStrategy\Commands\TimeCommand;
 use Bot\TelegramBot\CommandStrategy\Commands\WeatherCurrentCommand;
 use Bot\TelegramBot\CommandStrategy\Commands\WeatherForecastCommand;
-
 use Bot\TelegramBot\CommandStrategy\ContextCommand;
 use Bot\TelegramBot\CurlPost\CurlPostFieldBuilder\CurlPostFieldHtmlBuilder;
 use Bot\TelegramBot\TelegramBot;
@@ -46,11 +45,10 @@ class Commands
 
         $telegramBot->sendResponseTelegram('sendMessage', $curlOpt);
     }
-    
+
     static function time($data, $config)
     {
         $fromChatId = InputUser::fromChatId($data);
-
 
         $contextCommand = new ContextCommand();
         $telegramBot = new TelegramBot($config);
@@ -70,11 +68,10 @@ class Commands
 
         $telegramBot->sendResponseTelegram('sendMessage', $curlOpt);
     }
-    
+
     static function weather($data, $config)
     {
         $fromChatId = InputUser::fromChatId($data);
-
 
         $contextCommand = new ContextCommand();
         $telegramBot = new TelegramBot($config);
@@ -102,7 +99,7 @@ class Commands
 
         $telegramBot->sendResponseTelegram('sendMessage', $curlOpt);
     }
-    
+
     static function forecast($data, $config)
     {
         $fromChatId = InputUser::fromChatId($data);
@@ -125,4 +122,25 @@ class Commands
 
         $telegramBot->sendResponseTelegram('sendMessage', $curlOpt);
     }
+
+    static function unknown($data, $config)
+    {
+        $fromChatId = InputUser::fromChatId($data);
+
+        $telegramBot = new TelegramBot($config);
+
+        $sendMessageCurlPostField = (new CurlPostFieldHtmlBuilder())
+            ->init()
+            ->setChatId($fromChatId)
+            ->setParse_mode('html')
+            ->setText(
+                "Неизвестная команда." . PHP_EOL
+                . "Выберите команду из списка в меню.")
+            ->build();
+
+        $curlOpt = $sendMessageCurlPostField->getOpt();
+
+        $telegramBot->sendResponseTelegram('sendMessage', $curlOpt);
+    }
+
 }
