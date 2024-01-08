@@ -70,13 +70,6 @@ class TelegramBot implements iTelegramBot
             throw new TeleBotException($arrDataLogJSON);
         }
 
-//        if ($resultJSON == true) {
-//            return $response;
-//        }
-//        else {
-//            return json_decode($response, true);
-//        }
-        
-        return $response;
+        return json_decode($response, true);
     }
 }

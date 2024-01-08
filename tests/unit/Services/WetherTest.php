@@ -37,27 +37,24 @@ class WetherTest extends PHPUnit\Framework\TestCase
         $this->assertEquals('https://weatherapi-com.p.rapidapi.com/forecast.json?q=53.45154224%2C87.38461796&days=3', Weather::$forecastWeatherUrl);
     }
     
-    public function testHas_Static_moonPhase(): void
+    public function test_getCurrentWeather_return_Array(): void
     {
-        $this->assertClassHasStaticAttribute('moonPhase', Weather::class);
+        $this->assertIsArray($this->weather->getCurrentWeather());
     }
     
-    public function testGet_Current_WeatherIsString():void
+    public function test_get_Current_WeatherHasResult():void
     {
-        $this->assertIsString(Weather::getCurrentWeather());
+        $this->assertArrayHasKey('current', Weather::getCurrentWeather());
     }
     
-    public function testGet_Current_WeatherHasResult():void
+    public function test_getForecastWeather_return_Array(): void
     {
-        $this->assertStringContainsString('Мысках', Weather::getCurrentWeather());
-    }
-    public function testGet_Forecast_WeatherIsString():void
-    {
-        $this->assertIsString(Weather::getForecastWeather());
+        $this->assertIsArray($this->weather->getForecastWeather());
     }
     
     public function testGet_Forecast_WeatherHasResult():void
     {
-        $this->assertStringContainsString('Температура', Weather::getForecastWeather());
+        $this->assertArrayHasKey('forecast', Weather::getForecastWeather());
     }
+    
 }

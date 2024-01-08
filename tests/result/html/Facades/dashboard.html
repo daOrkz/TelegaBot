@@ -2,7 +2,7 @@
 <html lang="en">
  <head>
   <meta charset="UTF-8">
-  <title>Dashboard for /home/fillipp/www/localhost/src/InitWebHook</title>
+  <title>Dashboard for /home/fillipp/www/localhost/src/Facades</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="../_css/bootstrap.min.css?v=9.2.29" rel="stylesheet" type="text/css">
   <link href="../_css/nv.d3.min.css?v=9.2.29" rel="stylesheet" type="text/css">
@@ -17,7 +17,7 @@
       <nav aria-label="breadcrumb">
        <ol class="breadcrumb">
          <li class="breadcrumb-item"><a href="../index.html">/home/fillipp/www/localhost/src</a></li>
-         <li class="breadcrumb-item"><a href="index.html">InitWebHook</a></li>
+         <li class="breadcrumb-item"><a href="index.html">Facades</a></li>
          <li class="breadcrumb-item active">(Dashboard)</li>
 
        </ol>
@@ -58,6 +58,8 @@
         </tr>
        </thead>
        <tbody>
+       <tr><td><a href="Commands.php.html#24">Bot\Facades\Commands</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Exception.php.html#18">Bot\Facades\Exception</a></td><td class="text-right">0%</td></tr>
 
        </tbody>
       </table>
@@ -111,6 +113,12 @@
         </tr>
        </thead>
        <tbody>
+       <tr><td><a href="Commands.php.html#26"><abbr title="Bot\Facades\Commands::start">start</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Commands.php.html#49"><abbr title="Bot\Facades\Commands::time">time</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Commands.php.html#72"><abbr title="Bot\Facades\Commands::weather">weather</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Commands.php.html#103"><abbr title="Bot\Facades\Commands::forecast">forecast</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Commands.php.html#126"><abbr title="Bot\Facades\Commands::unknown">unknown</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Exception.php.html#20"><abbr title="Bot\Facades\Exception::handling">handling</abbr></a></td><td class="text-right">0%</td></tr>
 
        </tbody>
       </table>
@@ -155,7 +163,7 @@ $(document).ready(function() {
       .yAxis.tickFormat(d3.format('d'));
 
     d3.select('#classCoverageDistribution svg')
-      .datum(getCoverageDistributionData([0,0,0,0,0,0,0,0,0,0,0,1], "Class Coverage"))
+      .datum(getCoverageDistributionData([2,0,0,0,0,0,0,0,0,0,0,0], "Class Coverage"))
       .transition().duration(500).call(chart);
 
     nv.utils.windowResize(chart.update);
@@ -173,7 +181,7 @@ $(document).ready(function() {
       .yAxis.tickFormat(d3.format('d'));
 
     d3.select('#methodCoverageDistribution svg')
-      .datum(getCoverageDistributionData([0,0,0,0,0,0,0,0,0,0,0,4], "Method Coverage"))
+      .datum(getCoverageDistributionData([6,0,0,0,0,0,0,0,0,0,0,0], "Method Coverage"))
       .transition().duration(500).call(chart);
 
     nv.utils.windowResize(chart.update);
@@ -223,7 +231,7 @@ $(document).ready(function() {
     chart.yAxis.axisLabel('Cyclomatic Complexity');
 
     d3.select('#classComplexity svg')
-      .datum(getComplexityData([[100,5,"<a href=\"InitWebHook.php.html#7\">Bot\\InitWebHook\\InitWebHook<\/a>"]], 'Class Complexity'))
+      .datum(getComplexityData([[0,5,"<a href=\"Commands.php.html#24\">Bot\\Facades\\Commands<\/a>"],[0,1,"<a href=\"Exception.php.html#18\">Bot\\Facades\\Exception<\/a>"]], 'Class Complexity'))
       .transition()
       .duration(500)
       .call(chart);
@@ -247,7 +255,7 @@ $(document).ready(function() {
     chart.yAxis.axisLabel('Method Complexity');
 
     d3.select('#methodComplexity svg')
-      .datum(getComplexityData([[100,1,"<a href=\"InitWebHook.php.html#12\">Bot\\InitWebHook\\InitWebHook::__construct<\/a>"],[100,1,"<a href=\"InitWebHook.php.html#18\">Bot\\InitWebHook\\InitWebHook::generateURL<\/a>"],[100,2,"<a href=\"InitWebHook.php.html#23\">Bot\\InitWebHook\\InitWebHook::init<\/a>"],[100,1,"<a href=\"InitWebHook.php.html#48\">Bot\\InitWebHook\\InitWebHook::__get<\/a>"]], 'Method Complexity'))
+      .datum(getComplexityData([[0,1,"<a href=\"Commands.php.html#26\">Bot\\Facades\\Commands::start<\/a>"],[0,1,"<a href=\"Commands.php.html#49\">Bot\\Facades\\Commands::time<\/a>"],[0,1,"<a href=\"Commands.php.html#72\">Bot\\Facades\\Commands::weather<\/a>"],[0,1,"<a href=\"Commands.php.html#103\">Bot\\Facades\\Commands::forecast<\/a>"],[0,1,"<a href=\"Commands.php.html#126\">Bot\\Facades\\Commands::unknown<\/a>"],[0,1,"<a href=\"Exception.php.html#20\">Bot\\Facades\\Exception::handling<\/a>"]], 'Method Complexity'))
       .transition()
       .duration(500)
       .call(chart);

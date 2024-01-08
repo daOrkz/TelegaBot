@@ -1,3 +1,18 @@
+Init Web Hook
+ [x] Exception
+ [x] Generate url
+ [x] Megic get
+ [x] Init has array
+ [x] Init has result
+
+Wether
+ [x] Get Forecast WeatherHasResult
+ [x] Forecast Weather Url
+ [x] Current Weather Url
+ [x] GetCurrentWeather return Array
+ [x] Get Current WeatherHasResult
+ [x] GetForecastWeather return Array
+
 Curl Post Field Html Builder
  [x] Set Reply Markup inline keyboard html Builder
  [x] Set Reply Markup inline keyboard html Builder Exception
@@ -7,5 +22,10 @@ Curl Post Field Html Builder
  [x] Admin Builder setMessage
 
 Telegram Bot
- [x] Exception
+ [x] Tele bot exception
+ [x] Curl exception
+
+Time
+ [x] Get TimeHasKeyTime
+ [x] Init has array
 

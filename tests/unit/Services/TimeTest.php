@@ -19,11 +19,6 @@ use Bot\Services\Time as Time;
  */
 class TimeTest extends PHPUnit\Framework\TestCase
 {
-//    public function testException(): void
-//    {
-//        $this->expectException(Bot\Exceptions\CurlException::class);
-//        Time::getTime();
-//    }
     
     public function testInitHasArray():void
     {
@@ -34,4 +29,5 @@ class TimeTest extends PHPUnit\Framework\TestCase
     {
         $this->assertArrayHasKey('time', Time::getTime());
     }
+    
 }
