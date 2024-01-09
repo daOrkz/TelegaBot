@@ -1,6 +1,6 @@
 # telegramBot
 
-## congig.ini
+## config.ini
 
 ```
 [telegramBot]
